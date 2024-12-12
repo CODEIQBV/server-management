@@ -35,6 +35,10 @@ class UserResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
+                        Forms\Components\DateTimePicker::make('last_login_at')
+                            ->label('Last Login')
+                            ->disabled()
+                            ->dehydrated(false),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Password')
@@ -95,6 +99,11 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('last_login_at')
+                    ->label('Last Login')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\IconColumn::make('two_factor_secret')
                     ->label('2FA')
                     ->boolean()
