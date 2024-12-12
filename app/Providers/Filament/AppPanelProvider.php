@@ -17,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -27,6 +28,8 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->login()
             ->path('admin')
+            ->profile()
+            ->passwordReset()
             ->colors([
                 'primary' => Color::Blue,
             ])
@@ -52,6 +55,11 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                TwoFactorAuthenticationPlugin::make()
+                    ->addTwoFactorMenuItem()
+//                    ->enforceTwoFactorSetup()
             ])
             ->brandName('Server Manager')
             ->navigationGroups([
